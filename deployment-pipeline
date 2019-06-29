@@ -1,0 +1,44 @@
+#!/bin/bash
+
+function check_pods() {
+    echo "Checking k8s pods."
+    {
+        kubectl get pods
+    } || {
+        echo "kubectl not found"
+        exit 0
+    }
+}
+
+function buildAndInstall() {
+    project=$1
+    echo "Will start build and install of $project"
+    {
+    	mvn clean package jib:dockerBuild -f $project
+    } || {
+        echo "mvn not found or faild"
+	exit 0
+    }
+    {
+        helm install charts/$project --name $project
+    } || {
+        echo "helm not found or faild."
+	exit 0
+    }
+}
+
+function install() {
+    check_pods
+    {
+        echo "Setup minikube docker-env"
+        eval $(minikube docker-env)
+    } || {
+        echo "minikube not found"
+        exit 0
+    }
+
+    buildAndInstall chainsaw-config-server
+    buildAndInstall chainsaw-account-service
+    buildAndInstall chainsaw-bank-service
+    check_pods
+}

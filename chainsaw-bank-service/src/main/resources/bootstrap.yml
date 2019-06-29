@@ -1,0 +1,8 @@
+spring:
+  management:
+    enable: true
+  cloud:
+    config:
+      uri: http://smava-config-server
+  main:
+    allow-bean-definition-overriding: true
