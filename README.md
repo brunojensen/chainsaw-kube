@@ -1,4 +1,4 @@
-[ WARNING ] This is a small project that I've created to try some libraries and "stuffs", for study purpose, don't use in production without review and configurate all properly. 
+[ WARNING ] This is a small project that I've created to try some libraries and "stuff", for study purposes, don't use in production without review and configure all properly. 
 
 Here you'll find:
 
