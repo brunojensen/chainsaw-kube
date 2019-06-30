@@ -1,6 +1,4 @@
-[ WARNING ] DON'T USE IT ON PRODUCTION
-
-This is a small project that I've created to try some libraries and "stuffs":
+[ WARNING ] This is a small project that I've created to try some libraries and "stuffs", for study purpose, don't use in production without review and configurate all properly. 
 
 Here you'll find:
 
