@@ -1,5 +1,23 @@
-Requirements:
+This is a small project that I've created to try some libraries and "stuffs":
 
+Here you'll find:
+
+* Spring-boot application with spring-cloud-config-client, actuator, google jib (docker img creator), oauth2 client.
+* Spring cloud config server.
+* Helm chart for the applications
+* Keycloak installed with helm charts
+* Gloo Api Gateway installed with helm charts; routes creation;  
+
+What I'm planning to add
+
+* Add Prometheus for monitoring
+* Add Gloo Ingress controller
+* Add Gloo Knative 
+* Add a Quarkus application
+* Support for openshift
+* Keycloak cluster
+
+Follow the recipe and should work, otherwise drop an issue:
 
 * openJDK 8
 * Maven
@@ -14,6 +32,8 @@ Requirements:
   # download and config
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
   sudo install minikube /usr/local/bin
+  
+  # start a new kubernetes cluster with minikube
   minikube start --cpus 2 --memory 8192
 
   # first steps
