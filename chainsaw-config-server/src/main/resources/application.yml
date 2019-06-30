@@ -9,6 +9,6 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/brunojensen/configuration
+          uri: https://${git.repo.url}
           clone-on-start: true
           skipSslValidation: true
