@@ -1,3 +1,5 @@
+[ WARNING ] DON'T USE IT ON PRODUCTION
+
 This is a small project that I've created to try some libraries and "stuffs":
 
 Here you'll find:
