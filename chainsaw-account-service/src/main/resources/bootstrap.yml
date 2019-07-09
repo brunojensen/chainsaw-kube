@@ -3,4 +3,4 @@ spring:
     enable: true
   cloud:
     config:
-      uri: http://smava-config-server
+      uri: http://chainsaw-config-server
