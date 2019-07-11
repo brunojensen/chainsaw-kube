@@ -88,7 +88,7 @@ Follow the recipe and should work, otherwise drop an issue:
    There's some step to configure on keycloak:
 
    1. From the "Realm Setting" > "Keys" click on the public key button and copy the public key to be used on the chainsaw-config-server
-      as is configured on this Github repo: https://github.com/brunojensen/configuration
+      as is configured on this Github repo: https://github.com/brunojensen/chainsaw-kube-config
    2. Create a new client called "bank-platform" with "Client Protocol"="openid connect".
 
 
