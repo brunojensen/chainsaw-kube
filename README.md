@@ -1,5 +1,7 @@
 [ WARNING ] This is a small project that I've created to try some libraries and "stuff", for study purposes, don't use in production without review and configure all properly. 
 
+Why chainsaw? Nothing special, was a github suggestion. =)
+
 Here you'll find:
 
 * Spring-boot application with spring-cloud-config-client, actuator, google jib (docker img creator), oauth2 client.
