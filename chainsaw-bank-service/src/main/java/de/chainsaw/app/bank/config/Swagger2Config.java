@@ -19,9 +19,9 @@ public class Swagger2Config {
   public Docket api(ServletContext servletContext) {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
-        .apis(RequestHandlerSelectors.basePackage("de.smava.app.bank.controller"))
+        .apis(RequestHandlerSelectors.basePackage("de.chainsaw.app.bank.controller"))
         .build()
-        .host("bank.smava.de")
+        .host("bank.chainsaw.de")
         .protocols(Stream.of("http", "https").collect(toSet()));
   }
 }

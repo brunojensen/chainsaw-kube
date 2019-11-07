@@ -18,9 +18,9 @@ public class Swagger2Config {
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
-        .apis(RequestHandlerSelectors.basePackage("de.smava.app.account.controller"))
+        .apis(RequestHandlerSelectors.basePackage("de.chainsaw.app.account.controller"))
         .build()
-        .host("account.smava.de")
+        .host("account.chainsaw.de")
         .protocols(Stream.of("http", "https").collect(toSet()));
   }
 }

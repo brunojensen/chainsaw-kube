@@ -139,6 +139,32 @@ Follow the recipe and should work, otherwise drop an issue:
    # configure api-gateway proxy
    chmod +x k8s-config/gloo-routes && ./k8s-config/gloo-routes
    ```
+* Postgres operator 
+
+  how to install via helm
+
+  ```
+  helm install postgres-operator ./charts/postgres-operator
+  ```
+  
+  how to create a postgres instance
+
+  ```
+  kubectl create -f k8s-config/postgres-manifest/minimal-postgres-manifest.yaml
+  ```
+  
+  Obs.: change to the service type to NodePort
+
+  how to get host/port/user/password
+
+  ```
+  export HOST_PORT=$(minikube service acid-minimal-cluster --url | sed 's,.*/,,')
+  export PGHOST=$(echo $HOST_PORT | cut -d: -f 1)
+  export PGPORT=$(echo $HOST_PORT | cut -d: -f 2)
+  export PGPASSWORD=$(kubectl get secret postgres.acid-minimal-cluster.credentials -o 'jsonpath={.data.password}' | base64 -d)'
+
+  ```
+
 
 * Application evaluation
 

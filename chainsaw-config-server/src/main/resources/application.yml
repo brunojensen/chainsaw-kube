@@ -9,6 +9,6 @@ spring:
     config:
       server:
         git:
-          uri: https://${git.repo.url}
+          uri: https://github.com/brunojensen/chainsaw-kube-config
           clone-on-start: true
           skipSslValidation: true

@@ -1,0 +1,43 @@
+# Default values for chainsaw-account.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: app/quarkus-example
+  tag: 0.0.1-SNAPSHOT
+  pullPolicy: Never
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+env:
+  datasourceURL: jdbc:postgresql://acid-minimal-cluster:5432/dbtest
+  ssl: false 
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chainsaw-bank-service
+      paths: []
+  tls: []
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
