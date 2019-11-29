@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chainsaw-account.fullname" . }}
+  name: {{ include "chainsaw-app-service.fullname" . }}
   labels:
-{{ include "chainsaw-account.labels" . | indent 4 }}
+{{ include "chainsaw-app-service.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "chainsaw-account.name" . }}
+      app.kubernetes.io/name: {{ include "chainsaw-app-service.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "chainsaw-account.name" . }}
+        app.kubernetes.io/name: {{ include "chainsaw-app-service.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -26,22 +26,22 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 80
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /v1/actuator/health
-              port: 8080
+              {{- toYaml .Values.livenessProbe.httpGet | nindent 16 }}
             initialDelaySeconds: 120
             periodSeconds: 60
             timeoutSeconds: 3
           readinessProbe:
             httpGet:
-              path: /v1/actuator/health
-              port: 8080
+              {{- toYaml .Values.readinessProbe.httpGet | nindent 16 }}
             initialDelaySeconds: 120
             periodSeconds: 60
             timeoutSeconds: 3
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

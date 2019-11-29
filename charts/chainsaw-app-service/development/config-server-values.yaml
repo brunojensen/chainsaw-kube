@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: app/quarkus-example
+  repository: app/chainsaw-config-server
   tag: 0.0.1-SNAPSHOT
   pullPolicy: Never
 
@@ -13,9 +13,6 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-env:
-  datasourceURL: jdbc:postgresql://acid-minimal-cluster:5432/dbtest
-  ssl: false 
 service:
   type: ClusterIP
   port: 80
@@ -25,9 +22,24 @@ ingress:
   enabled: false
   annotations: {}
   hosts:
-    - host: chainsaw-bank-service
+    - host: chainsaw-config-server
       paths: []
   tls: []
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+
+readinessProbe: 
+  httpGet:
+    path: /actuator/health
+    port: 8080
+
+env:
+  - name: ENVIRONMENT
+    value: "development"
+
 resources: {}
   # limits:
   #   cpu: 100m

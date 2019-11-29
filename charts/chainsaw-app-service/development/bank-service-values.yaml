@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: app/chainsaw-account-service
+  repository: app/chainsaw-bank-service
   tag: 0.0.1-SNAPSHOT
   pullPolicy: Never
 
@@ -22,9 +22,24 @@ ingress:
   enabled: false
   annotations: {}
   hosts:
-    - host: chainsaw-account-service
+    - host: chainsaw-bank-service
       paths: []
   tls: []
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+
+readinessProbe: 
+  httpGet:
+    path: /actuator/health
+    port: 8080
+
+env:
+  - name: ENVIRONMENT
+    value: "development"
+
 resources: {}
   # limits:
   #   cpu: 100m

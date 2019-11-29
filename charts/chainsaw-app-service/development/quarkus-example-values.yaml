@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: app/chainsaw-bank-service
+  repository: app/quarkus-example
   tag: 0.0.1-SNAPSHOT
   pullPolicy: Never
 
@@ -22,9 +22,28 @@ ingress:
   enabled: false
   annotations: {}
   hosts:
-    - host: chainsaw-bank-service
+    - host: quarkus-example-service
       paths: []
   tls: []
+
+livenessProbe:
+  httpGet:
+    path: /user
+    port: 8080
+
+readinessProbe: 
+  httpGet:
+    path: /user
+    port: 8080
+
+env:
+  - name: ENVIRONMENT
+    value: "development"
+  - name: QUARKUS_DATASOURCE_URL
+    value: "jdbc:postgresql://acid-minimal-cluster:5432/dbtest"
+  - name: QUARKUS_SSL_ENABLED
+    value: "false" 
+
 resources: {}
   # limits:
   #   cpu: 100m
