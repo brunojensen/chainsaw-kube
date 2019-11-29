@@ -1,7 +1,7 @@
-package org.acme.resource;
+package de.chainsaw.app.user.resource;
 
-import org.acme.model.User;
-import org.acme.service.UserService;
+import de.chainsaw.app.user.model.User;
+import de.chainsaw.app.user.service.UserService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

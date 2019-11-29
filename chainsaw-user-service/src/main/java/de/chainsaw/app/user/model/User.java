@@ -1,4 +1,4 @@
-package org.acme.model;
+package de.chainsaw.app.user.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 

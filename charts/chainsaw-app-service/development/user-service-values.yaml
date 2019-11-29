@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: app/quarkus-example
+  repository: app/chainsaw-user-service
   tag: 0.0.1-SNAPSHOT
   pullPolicy: Never
 
@@ -22,7 +22,7 @@ ingress:
   enabled: false
   annotations: {}
   hosts:
-    - host: quarkus-example-service
+    - host: chainsaw-user-service
       paths: []
   tls: []
 

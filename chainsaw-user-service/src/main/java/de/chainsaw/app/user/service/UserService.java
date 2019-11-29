@@ -1,7 +1,7 @@
-package org.acme.service;
+package de.chainsaw.app.user.service;
 
 import io.quarkus.panache.common.Parameters;
-import org.acme.model.User;
+import de.chainsaw.app.user.model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
