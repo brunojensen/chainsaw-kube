@@ -5,6 +5,7 @@ Why chainsaw? Nothing special, was a github suggestion. =)
 Here you'll find:
 
 * Spring-boot application with spring-cloud-config-client, actuator, google jib (docker img creator), oauth2 client.
+* Quarkus application (need improvements)
 * Spring cloud config server.
 * Helm chart for the applications
 * Keycloak installed with helm charts
@@ -15,9 +16,12 @@ What I'm planning to add
 * Add Prometheus for monitoring
 * Add Gloo Ingress controller
 * Add Gloo Knative 
-* Add a Quarkus application
+* GraphQL as Backend For Frontend (BFF)
+* ArchUnit to keep architecture consistent
+* Migrate to Helm 3
 * Support for openshift
 * Keycloak cluster
+* Upgrade to OpenJDK 11
 
 Follow the recipe and should work, otherwise drop an issue:
 
