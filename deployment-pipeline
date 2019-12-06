@@ -20,7 +20,7 @@ function buildAndInstall() {
 	exit 0
     }
     {
-        helm install charts/chainsaw-app-service --name $project -f charts/chainsaw-app-service/development/$project-values.yaml
+        helm upgrade --install $project charts/chainsaw-app-service -f charts/chainsaw-app-service/development/$project-values.yaml
     } || {
         echo "helm not found or faild."
 	exit 0

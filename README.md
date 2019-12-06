@@ -33,12 +33,10 @@ Follow the recipe and should work, otherwise drop an issue:
 
    motivation: basic kubernetes env. to run applications locally
 
-  install:
-  ```
-  # download and config
-  curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
-  sudo install minikube /usr/local/bin
-  
+  installation: 
+  https://kubernetes.io/docs/tasks/tools/install-minikube/
+
+  ```  
   # start a new kubernetes cluster with minikube
   minikube start --cpus 2 --memory 8192
 
@@ -50,19 +48,13 @@ Follow the recipe and should work, otherwise drop an issue:
 
   ```
 
-* Helm charts
+* Helm V3+ charts
 
    motivation: easy to deploy containers and stateful services into kubernetes and also have a good catalog of ready-to-use charts and configurations.
 
-   install:
+   installation:
+   https://helm.sh/docs/intro/install/
 
-   ```
-   # download installation script
-   curl -L https://git.io/get_helm.sh | bash
-
-   # configure minikube to use helm as application management
-   helm init
-   ```
 
 * Keycloak (auth server)
 
@@ -73,7 +65,7 @@ Follow the recipe and should work, otherwise drop an issue:
    helm repo add codecentric https://codecentric.github.io/helm-charts
 
    # execute installation on minikube
-   helm install --name keycloak --set keycloak.password=admin,keycloak.username=admin codecentric/keycloak
+   helm install keycloak --set keycloak.password=admin,keycloak.username=admin codecentric/keycloak
    ```
 
    Run after keycloak is up and running
@@ -111,7 +103,7 @@ Follow the recipe and should work, otherwise drop an issue:
    helm repo add gloo https://storage.googleapis.com/solo-public-helm
 
    # install gloo and setup to use a NodePort
-   helm install gloo/gloo --set gatewayProxies.gateway-proxy.service.type=NodePort --name gloo
+   helm install gloo gloo/gloo --set gatewayProxies.gateway-proxy.service.type=NodePort 
 
    # check everything in your minikube
    kubectl get all --all-namespaces
