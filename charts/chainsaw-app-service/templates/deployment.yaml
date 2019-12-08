@@ -3,26 +3,29 @@ kind: Deployment
 metadata:
   name: {{ include "chainsaw-app-service.fullname" . }}
   labels:
-{{ include "chainsaw-app-service.labels" . | indent 4 }}
+    {{- include "chainsaw-app-service.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "chainsaw-app-service.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- include "chainsaw-app-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "chainsaw-app-service.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- include "chainsaw-app-service.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      serviceAccountName: {{ include "chainsaw-app-service.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -31,15 +34,15 @@ spec:
           livenessProbe:
             httpGet:
               {{- toYaml .Values.livenessProbe.httpGet | nindent 16 }}
-            initialDelaySeconds: 120
-            periodSeconds: 60
-            timeoutSeconds: 3
+            initialDelaySeconds: 60
+            periodSeconds: 120
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               {{- toYaml .Values.readinessProbe.httpGet | nindent 16 }}
-            initialDelaySeconds: 120
-            periodSeconds: 60
-            timeoutSeconds: 3
+            initialDelaySeconds: 60
+            periodSeconds: 120
+            timeoutSeconds: 5
           env:
             {{- toYaml .Values.env | nindent 12 }}
           resources:

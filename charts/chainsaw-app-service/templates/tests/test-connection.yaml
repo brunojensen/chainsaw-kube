@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: "{{ include "chainsaw-app-service.fullname" . }}-test-connection"
   labels:
-{{ include "chainsaw-app-service.labels" . | indent 4 }}
+{{ include "chainsaw-app-service.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test-success
 spec:

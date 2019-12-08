@@ -48,7 +48,7 @@ Follow the recipe and should work, otherwise drop an issue:
 
   ```
 
-* Helm V3+ charts
+* Helm charts V3+:
 
    motivation: easy to deploy containers and stateful services into kubernetes and also have a good catalog of ready-to-use charts and configurations.
 
@@ -71,7 +71,7 @@ Follow the recipe and should work, otherwise drop an issue:
    Run after keycloak is up and running
 
    ```
-   # observe and wait until keycloak is up - Ctrl + C to leave
+   # observe and wait until keycloak is up
    kubectl get pods -w
 
    # expose keycloak throught a node port
@@ -90,7 +90,7 @@ Follow the recipe and should work, otherwise drop an issue:
    2. Create a new client called "bank-platform" with "Client Protocol"="openid connect".
 
 
-   > Optionally, we also could install keycloak-gatekeeper to work as a side-car to app pod and provide authentication out-of-shelf
+   > Optionally, we could also install keycloak-gatekeeper to work as a side-car to app pod and provide authentication out-of-shelf
 
 * Gloo (api gateway)
 

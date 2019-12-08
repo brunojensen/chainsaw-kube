@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "chainsaw-app-service.fullname" . }}
   labels:
-{{ include "chainsaw-app-service.labels" . | indent 4 }}
+    {{- include "chainsaw-app-service.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,5 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ include "chainsaw-app-service.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "chainsaw-app-service.selectorLabels" . | nindent 4 }}

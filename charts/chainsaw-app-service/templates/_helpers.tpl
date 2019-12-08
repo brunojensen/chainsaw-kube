@@ -35,11 +35,29 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "chainsaw-app-service.labels" -}}
-app.kubernetes.io/name: {{ include "chainsaw-app-service.name" . }}
 helm.sh/chart: {{ include "chainsaw-app-service.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "chainsaw-app-service.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}
+
+{{/*
+Selector labels
+*/}}
+{{- define "chainsaw-app-service.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "chainsaw-app-service.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "chainsaw-app-service.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "chainsaw-app-service.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
 {{- end -}}
