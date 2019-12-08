@@ -170,3 +170,8 @@ Follow the recipe and should work, otherwise drop an issue:
    ./app.sh
 
    ```
+
+* kubectl tips:
+
+   https://kubernetes.io/docs/reference/kubectl/overview/
+   

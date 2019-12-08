@@ -3,4 +3,4 @@ spring:
     enable: true
   cloud:
     config:
-      uri: http://chainsaw-config-server
+      uri: http://config-server-chainsaw-app-service

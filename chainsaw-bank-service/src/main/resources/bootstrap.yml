@@ -3,6 +3,32 @@ spring:
     enable: true
   cloud:
     config:
-      uri: http://chainsaw-config-server
+      uri: http://config-server-chainsaw-app-service
   main:
     allow-bean-definition-overriding: true
+
+security:
+  oauth2:
+    client:
+      client-id: bank-platform
+      client-secret: 217a0519-e23d-4469-afde-730421c6041d
+      user-authorization-uri: ${rest.security.issuer-uri}/protocol/openid-connect/auth
+      access-token-uri: ${rest.security.issuer-uri}/protocol/openid-connect/token
+      scope: openid
+      grant-type: client_credentials
+
+---
+
+spring:
+  profiles: test
+
+rest:
+  security:
+    issuer-uri: http://mock-auth
+
+security:
+  oauth2:
+    resource:
+      id: bank-platform
+      token-info-uri: ${rest.security.issuer-uri}/protocol/openid-connect/token/introspect
+      user-info-uri: ${rest.security.issuer-uri}/protocol/openid-connect/userinfo

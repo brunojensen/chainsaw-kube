@@ -51,12 +51,12 @@ ingress:
 
 livenessProbe:
   httpGet:
-    path: /actuator/health
+    path: /v1/actuator/health
     port: 8080
 
 readinessProbe: 
   httpGet:
-    path: /actuator/health
+    path: /v1/actuator/health
     port: 8080
 
 env:

@@ -1,7 +1,27 @@
 package de.chainsaw.app.bank.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.chainsaw.app.bank.dto.AccountDto;
+import de.chainsaw.app.testsupport.OAuthTestConfiguration;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.client.MockRestServiceServer;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.support.GenericWebApplicationContext;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestToUriTemplate;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withServerError;
@@ -9,37 +29,14 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.chainsaw.app.bank.dto.AccountDto;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.client.MockRestServiceServer;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.support.GenericWebApplicationContext;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ContextConfiguration(classes = OAuthTestConfiguration.class)
+@ActiveProfiles("test")
 public class BankControllerIntegrationTest {
 
-  @MockBean
-  private OAuth2AuthenticationDetails auth2AuthenticationDetails;
-
   @Autowired
-  private RestTemplate accountRestTemplate;
+  private OAuth2RestTemplate oAuth2RestTemplate;
 
   @Autowired
   private GenericWebApplicationContext webApplicationContext;
@@ -53,31 +50,7 @@ public class BankControllerIntegrationTest {
   @Before
   public void init() throws Exception {
     mockServer = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    mockRestServiceServer = MockRestServiceServer.createServer(accountRestTemplate);
-    mockAuthentication();
-  }
-
-  private void mockAuthentication() {
-    when(auth2AuthenticationDetails.getTokenValue()).thenReturn("token");
-    SecurityContextHolder.getContext().setAuthentication(
-        new AbstractAuthenticationToken(null) {
-
-          @Override
-          public Object getDetails() {
-            return auth2AuthenticationDetails;
-          }
-
-          @Override
-          public Object getCredentials() {
-            return auth2AuthenticationDetails;
-          }
-
-          @Override
-          public Object getPrincipal() {
-            return auth2AuthenticationDetails;
-          }
-        }
-    );
+    mockRestServiceServer = MockRestServiceServer.createServer(oAuth2RestTemplate);
   }
 
   @Test
