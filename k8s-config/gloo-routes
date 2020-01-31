@@ -1,9 +1,0 @@
-glooctl add route --method GET --dest-name default-chainsaw-account-service-80 --rest-function-name findAll --path-exact /v1/accounts
-
-glooctl add route --name default --method GET --path-prefix /v1/account/ --dest-name default-chainsaw-account-service-80 --dest-namespace gloo-system --rest-parameters ':path=/v1/account/{id}' --rest-function-name findById
-
-glooctl add route --name default --method POST --path-prefix /v1/account/ --dest-name default-chainsaw-account-service-80 --dest-namespace gloo-system --rest-parameters ':path=/v1/account/{id}' --rest-function-name create
-
-glooctl add route --name default --method GET --path-prefix /v1/bank/ --dest-name default-chainsaw-bank-service-80 --dest-namespace gloo-system --rest-function-name findById --rest-parameters ':path=/v1/bank/{id}'
-
-glooctl get virtualservice

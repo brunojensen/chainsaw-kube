@@ -9,13 +9,10 @@ Here you'll find:
 * Spring cloud config server.
 * Helm chart for the applications
 * Keycloak installed with helm charts
-* Gloo Api Gateway installed with helm charts; routes creation;  
 
 What I'm planning to add
 
 * Add Prometheus for monitoring
-* Add Gloo Ingress controller
-* Add Gloo Knative 
 * GraphQL as Backend For Frontend (BFF)
 * ArchUnit to keep architecture consistent
 * Migrate to Helm 3
@@ -92,29 +89,6 @@ Follow the recipe and should work, otherwise drop an issue:
 
    > Optionally, we could also install keycloak-gatekeeper to work as a side-car to app pod and provide authentication out-of-shelf
 
-* Gloo (api gateway)
-
-   motivation: easy-to-use and configure and integrates very well with kubernetes.
-   It also expect /swagger.json path to autoconfigure
-   the available REST APIs and add them to the api gateway route.
-
-   ```
-   # add new repo
-   helm repo add gloo https://storage.googleapis.com/solo-public-helm
-
-   # install gloo and setup to use a NodePort
-   helm install gloo gloo/gloo --set gatewayProxies.gateway-proxy.service.type=NodePort 
-
-   # check everything in your minikube
-   kubectl get all --all-namespaces
-
-   # get all the external links
-   minikube service list
-
-   # install gloo command line tool, required to configure the api gateway later
-   curl -sL https://run.solo.io/gloo/install | sh
-   export PATH=$HOME/.gloo/bin:$PATH
-   ```
 
 * Service discovery comes off-the-shelf with kubernetes
 
@@ -132,8 +106,6 @@ Follow the recipe and should work, otherwise drop an issue:
    # pre-defined bash script to run maven and helm to package and install the application on the local environment
    chmod +x app.sh && ./app.sh install
 
-   # configure api-gateway proxy
-   chmod +x k8s-config/gloo-routes && ./k8s-config/gloo-routes
    ```
 * Postgres operator 
 
