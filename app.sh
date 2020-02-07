@@ -18,10 +18,9 @@ function setup_url() {
   echo $URL
 }
 
-init_token
-
 if [ "$1" == "use" ];
 then
+  init_token
   setup_url $1 $2
   if [ "$3" == "get" ];
   then

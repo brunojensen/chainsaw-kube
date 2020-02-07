@@ -26,13 +26,17 @@ Follow the recipe and should work, otherwise drop an issue:
 * Maven
 * VirtualBox
 
-* Minikube
+* Minikube / Kind
 
    motivation: basic kubernetes env. to run applications locally
 
-  installation: 
+  Minikube installation: 
   https://kubernetes.io/docs/tasks/tools/install-minikube/
 
+  Kind installation:
+  https://kind.sigs.k8s.io/docs/user/quick-start/
+  
+  ** Additional steps for Minikube:
   ```  
   # start a new kubernetes cluster with minikube
   minikube start --cpus 2 --memory 8192
@@ -53,30 +57,35 @@ Follow the recipe and should work, otherwise drop an issue:
    https://helm.sh/docs/intro/install/
 
 
-* Keycloak (auth server)
+* Keycloak operator
 
    motivation: provides a great management interface, openID support and it has a great development and support community
 
+   
+   1. Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.
    ```
-   # configure external repository
-   helm repo add codecentric https://codecentric.github.io/helm-charts
-
-   # execute installation on minikube
-   helm install keycloak --set keycloak.password=admin,keycloak.username=admin codecentric/keycloak
+   $ curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/0.14.1/install.sh | bash -s 0.13.0
+   ```
+   2. Install the operator by running the following command:What happens when I execute this command?
+   ```
+   $ kubectl create -f https://operatorhub.io/install/keycloak-operator.yaml
    ```
 
-   Run after keycloak is up and running
+   3. This Operator will be installed in the "my-keycloak-operator" namespace and will be usable from this namespace only.
 
+   After install, watch your operator come up using next command.
    ```
-   # observe and wait until keycloak is up
-   kubectl get pods -w
-
-   # expose keycloak throught a node port
-   kubectl expose pod keycloak-0 --name=keycloak --type=NodePort
-
-   # check IP:PORT to access the admin console
-   minikube service keycloak --url
+   $ kubectl get csv -n my-keycloak-operator
    ```
+
+   4. Create a Keycloak instance:
+   
+   ** You can download and customize the keycloak.yaml as you need.
+   ```
+   kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-operator/master/deploy/examples/keycloak/keycloak.yaml
+   ```
+
+   To use it, checkout the custom resource definitions (CRDs) introduced by this operator to start using it.
 
    IMPORTANT:
 

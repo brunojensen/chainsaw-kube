@@ -20,6 +20,11 @@ function buildAndInstall() {
 	exit 0
     }
     {
+    kind load docker-image app/chainsaw-$project:0.0.1-SNAPSHOT
+    } || {
+       echo "kind not present"
+    }
+    {
         helm upgrade --install $project charts/chainsaw-app-service -f charts/chainsaw-app-service/development/$project-values.yaml
     } || {
         echo "helm not found or faild."

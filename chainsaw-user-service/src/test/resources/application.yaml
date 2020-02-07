@@ -1,0 +1,8 @@
+# Datasource
+quarkus:
+  datasource:
+    driver: org.postgresql.Driver
+    min-size: 3
+    max-size: 13
+  flyway:
+    migrate-at-start: true

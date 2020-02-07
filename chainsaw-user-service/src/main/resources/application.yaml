@@ -1,0 +1,11 @@
+# Datasource
+quarkus:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dbtest
+    driver: org.postgresql.Driver
+    username: sa
+    password: sa
+    min-size: 3
+    max-size: 13
+  flyway:
+    migrate-at-start: true
