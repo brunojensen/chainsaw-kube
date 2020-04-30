@@ -36,29 +36,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class BankControllerIntegrationTest {
 
   @Autowired
-  private OAuth2RestTemplate oAuth2RestTemplate;
-
-  @Autowired
   private GenericWebApplicationContext webApplicationContext;
 
   private MockMvc mockServer;
-
-  private MockRestServiceServer mockRestServiceServer;
 
   private ObjectMapper mapper = new ObjectMapper();
 
   @Before
   public void init() throws Exception {
     mockServer = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    mockRestServiceServer = MockRestServiceServer.createServer(oAuth2RestTemplate);
   }
 
   @Test
   public void testGetBankAccount() throws Exception {
-
-    mockExternalRestCall();
-
-    final MvcResult mvcResult = mockServer.perform(
+final MvcResult mvcResult = mockServer.perform(
         get("/bank/1"))
         .andExpect(status().isOk())
         .andReturn();
@@ -74,41 +65,9 @@ public class BankControllerIntegrationTest {
 
   @Test
   public void testGetBankAccount_handleError() throws Exception {
-    mockExternalRestCallFailure();
-
     mockServer.perform(
         get("/bank/9"))
         .andExpect(status().isInternalServerError());
 
-  }
-
-
-  /**
-   * Could be replaced for Spring Cloud Contracts.
-   */
-  private void mockExternalRestCall() throws Exception {
-    mockRestServiceServer.reset();
-
-    final AccountDto dto = new AccountDto();
-    dto.setId(1L);
-    dto.setFirstName("First-1");
-    dto.setLastName("Last-1");
-
-    mockRestServiceServer
-        .expect(requestToUriTemplate("/EMPTY/1"))
-        .andExpect(method(HttpMethod.GET))
-        .andRespond(withSuccess(mapper.writeValueAsString(dto), MediaType.APPLICATION_JSON));
-  }
-
-  /**
-   * Could be replaced for Spring Cloud Contracts.
-   */
-  private void mockExternalRestCallFailure() throws Exception {
-    mockRestServiceServer.reset();
-
-    mockRestServiceServer
-        .expect(requestToUriTemplate("/EMPTY/9"))
-        .andExpect(method(HttpMethod.GET))
-        .andRespond(withServerError());
   }
 }

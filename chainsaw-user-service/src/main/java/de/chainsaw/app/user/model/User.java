@@ -12,8 +12,4 @@ public class User extends PanacheEntity {
 
     public String name;
 
-    public static User findByName(final String name) {
-        return find("name", name).firstResult();
-    }
-
 }

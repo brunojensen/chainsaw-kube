@@ -26,7 +26,7 @@ public class UserResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public User findByName(@PathParam("id") Long id) {
+    public User find(@PathParam("id") Long id) {
         return userService.findById(id);
     }
 

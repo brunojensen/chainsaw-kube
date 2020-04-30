@@ -44,6 +44,5 @@ function install() {
 
     buildAndInstall config-server
     buildAndInstall account-service
-    buildAndInstall bank-service
     check_pods
 }
