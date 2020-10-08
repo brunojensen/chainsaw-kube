@@ -1,14 +1,17 @@
 spring:
   management:
     enable: true
-  cloud:
-    config:
-      uri: http://config-server-chainsaw-app-service
   main:
     allow-bean-definition-overriding: true
 
 security:
   oauth2:
+    resource:
+      id: bank-platform
+      token-info-uri: ${rest.security.issuer-uri}/protocol/openid-connect/token/introspect
+      user-info-uri: ${rest.security.issuer-uri}/protocol/openid-connect/userinfo
+      jwt:
+        key-value: -----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4ro1aX1Z0aDyBano9FdYxWsubRvuMetT3gTWJQ/2e8MDNYvRJYoAlQbv8YiAw/i0WSMkM2jParjgcDfr3IrNhqhYSxKvcCzZpovQ9kr5ueI6/HLI2Wt5vXl9rYAW1S3Sp4B/uV4SlJNUp1G3JqKnzFP4ERULWOpuRenULyd8GHK5M+Al0gU0+0uFLcN5PyNGCWcsMHp9udwE+lHRIzC8eL8SSnGUJV3YkoEdN8pfac6ghGTDgN+FjULyxmNEqb3cWyM/OZQwcG+IVmIB0Av6/hjgk+Uo+XiNlnUskhER5rwRHaRm3pXOxAit1Kf9pwW6af26OZg1gx7PY2y9OeKaKwIDAQAB-----END PUBLIC KEY-----
     client:
       client-id: bank-platform
       client-secret: 217a0519-e23d-4469-afde-730421c6041d
@@ -16,6 +19,10 @@ security:
       access-token-uri: ${rest.security.issuer-uri}/protocol/openid-connect/token
       scope: openid
       grant-type: client_credentials
+
+rest:
+  security:
+    issuer-uri: http://keycloak-server/auth/realms/master
 
 ---
 

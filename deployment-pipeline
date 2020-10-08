@@ -42,7 +42,6 @@ function install() {
         exit 0
     }
 
-    buildAndInstall config-server
     buildAndInstall account-service
     check_pods
 }

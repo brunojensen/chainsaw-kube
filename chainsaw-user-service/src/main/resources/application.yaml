@@ -3,8 +3,8 @@ quarkus:
   datasource:
     url: jdbc:postgresql://localhost:5432/dbtest
     driver: org.postgresql.Driver
-    username: sa
-    password: sa
+    username: ${datasource.username:sa}
+    password: ${datasource.password:sa}
     min-size: 3
     max-size: 13
   flyway:
